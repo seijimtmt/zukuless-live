@@ -1,0 +1,54 @@
+#!/bin/sh
+
+echo
+echo "live-config hook: customizing the system ..."
+
+#
+#  setting default browser
+#
+echo "live-config hook: custom ... setting default browser ..."
+if [ -e /usr/bin/iceweasel ]
+then
+    update-alternatives --set x-www-browser /usr/bin/iceweasel
+fi
+
+
+#
+#  do not start xfce4-tips automatically
+#
+echo "live-config hook: custom ... setting xfce-tips not to start automatically ..."
+rm -f /etc/xdg/autostart/xfce4-tips-autostart.desktop
+
+
+#
+#  setting NQC default
+#
+echo "live-config hook: custom ... setting NQC defaults ..."
+cat >> /etc/profile <<EOF
+
+export RCX_PORT=usb
+export NQC_OPTIONS="-Trcx2"
+EOF
+
+
+#
+#  changing defaults values of /etc/dhcp/dhclient.conf
+#
+echo "live-config hook: custom ... setting DHCP client ..."
+cat >> /etc/dhcp/dhclient.conf <<EOF
+
+timeout 5;
+retry 5;
+reboot 5;
+select-timeout 5;
+initial-interval 2;
+EOF
+
+
+#
+#  do not load cdc_acm driver
+#
+echo "live-config hook: custom ... removing cdc_acm ..."
+echo "blacklist cdc_acm" > /etc/modprobe.d/legonxt.conf
+
+exit 0

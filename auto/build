@@ -1,0 +1,14 @@
+#!/bin/sh
+
+#BINARY="debian-wheezy-live-amd64-xfce-ja-unofficial-$(date +%Y%m%d)"
+BINARY="binary-$(date +%Y%m%d)"
+
+lb build noauto "${@}" 2>&1 | tee build.log
+
+#
+#  rename binary.* files
+#
+for _FILE in binary.*
+do
+    [ -f "${_FILE}" ] && mv ${_FILE} "${BINARY}${_FILE#binary}"
+done

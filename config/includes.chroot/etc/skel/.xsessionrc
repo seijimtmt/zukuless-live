@@ -1,0 +1,8 @@
+### Japanese Keyboard
+# setxkbmap -rules xfree86 -model jp106 -layout jp
+
+### US Keyboard
+# setxkbmap -rules xfree86 -model us -layout us
+
+### use both CTRL and CapsLock Keys as control
+setxkbmap -option "ctrl:nocaps"

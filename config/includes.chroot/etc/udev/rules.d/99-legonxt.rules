@@ -1,0 +1,3 @@
+# LEGO Mindstorms NXT
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", GROUP="plugdev", MODE="0660"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0694", GROUP="plugdev", MODE="0660"

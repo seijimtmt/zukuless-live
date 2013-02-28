@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+SRC="http://libnxt.googlecode.com/files/libnxt-0.3.tar.gz"
+
+echo
+echo "live-config hook: installing libnxt ..."
+
+if [ ! -x /usr/bin/scons ]
+then
+    echo "live-config hook: E: scons is not installed."
+    exit 1
+fi
+
+cd /usr/local/src
+if wget "$SRC"
+then
+    tar zvxf libnxt-0.3.tar.gz
+    cd libnxt-0.3
+    scons
+    mv fwflash fwexec /usr/local/bin/
+    cd ..
+    rm -fr libnxt-0.3
+else
+    echo "live-config hook: E: failed to download libnxt-0.3.tar.gz."
+    exit 1
+fi

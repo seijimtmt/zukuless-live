@@ -1,0 +1,26 @@
+python-docutils python-httplib2
+python-dev python-gdata python-fpconst
+python-jinja2 python-libxml2 python-markdown python-mecab
+python-mode python-webpy
+python-django sqlite3 sqlite3-doc
+
+#if DISTRIBUTION squeeze wheezy sid
+python-django-app-plugins
+python-django-auth-openid
+python-django-contact-form
+python-django-countries
+python-django-dajax
+python-django-dajaxice
+python-django-djapian
+python-django-debug-toolbar
+python-django-djapian
+python-django-formfieldset
+python-django-genshi
+python-django-lint
+python-django-registration
+python-django-shorturls
+python-django-south
+python-django-tagging
+python-django-tinymce
+python-django-treebeard
+#endif

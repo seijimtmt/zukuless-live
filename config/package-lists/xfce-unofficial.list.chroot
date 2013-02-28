@@ -1,0 +1,142 @@
+#
+# DEBIANLIVE/config/package-lists/xfce4-unofficial.list.chroot
+#
+
+#
+#  xfce4
+#
+xfce4
+xfce4-goodies
+xfce4-places-plugin 
+xfce4-xkb-plugin
+xfce4-dict
+xfce4-mpc-plugin
+xfce4-panel
+thunar-volman
+thunar-archive-plugin
+thunar-media-tags-plugin
+tumbler
+
+#
+#  Programing (NQC, C++, Ruby, Python, pascal, make, etc.)
+#    Pascal, scons and libusb-dev are needed to compile NBC.
+#
+nqc
+g++
+ruby
+python python-lxml
+make
+automake
+scons
+fp-compiler
+fp-units-fcl
+fp-units-base
+libusb-dev
+
+#
+#  electronics
+#
+arduino
+fritzing
+geda
+kicad
+
+#
+#  Browser and gnash plugin
+#
+iceweasel
+browser-plugin-gnash
+browser-plugin-lightspark
+chromium-browser
+chromium-browser-l10n
+chromium-browser-inspector
+gnash
+gcj-jre
+
+#
+#  Mail
+#
+icedove
+sylpheed
+sylpheed-i18n
+
+
+#
+#  Graphics
+#
+gimp
+inkscape
+xfig transfig
+imagemagick
+dia
+k3d
+fswebcam
+
+#
+# Office
+#
+libreoffice
+
+
+#
+# emacs
+#
+emacs23 emacs23-el
+wl mew
+
+#
+# binary firmwares for wireless card
+#
+firmware-linux-free
+#if ARCHIVE_AREAS non-free
+atmel-firmware
+firmware-iwlwifi
+firmware-ralink
+firmware-brcm80211
+libertas-firmware
+zd1211-firmware
+firmware-linux-nonfree
+#endif
+
+
+#
+# Laptop, ACPI
+#
+task-laptop
+#acpid acpi-support
+
+#
+# tex
+#
+#texlive
+
+#
+# miscellaneous utilities
+#
+w3m
+lv
+deborphan
+xterm
+less
+patch
+openssh-client
+wicd
+vrms
+wodim
+dosfstools
+ntfsprogs
+gv
+evince
+bind9-host
+vlc
+zip
+unzip
+mesa-utils
+xosview
+acpidump
+cpufreqd
+cpufrequtils
+
+#if ARCHITECTURES amd64
+#ia32-libs
+#endif

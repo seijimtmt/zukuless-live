@@ -1,0 +1,11 @@
+#!/bin/sh
+
+lb clean noauto "${@}"
+
+rm -f config/binary config/bootstrap config/chroot config/common config/source
+rm -f build.log
+
+rm -f *.img *.iso *.contents *.packages *.md5sum *.log
+rm -f chroot.packages.*
+rm -f config/package-lists/*_l10n-*.list.chroot
+rm -f config/hooks/*_l10n-*.chroot

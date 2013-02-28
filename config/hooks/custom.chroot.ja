@@ -1,0 +1,40 @@
+#!/bin/sh
+
+#
+#  setup language dependent configurations
+#
+set -e
+
+#
+#  emacs
+#
+cat > /etc/emacs/site-start.d/90mozc.el << EOF
+;; for emacs-mozc
+(require 'mozc)
+(set-language-environment "Japanese")
+(setq default-input-method "japanese-mozc")
+EOF
+
+
+#
+#  default input method
+#
+update-alternatives --set xinput-ja_JP /etc/X11/xinit/xinput.d/ibus
+#update-alternatives --set xinput-ja_JP /etc/X11/xinit/xinput.d/uim-toolbar
+#update-alternatives --set xinput-ja_JP /etc/X11/xinit/xinput.d/uim-toolbar
+#im-switch -s uim-systray
+#im-switch -s uim-toolbar
+
+
+#
+#  ibus
+#
+
+/usr/bin/gconftool --direct \
+    --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults \
+    --type list --list-type=string \
+    --set /desktop/ibus/general/preload_engines [mozc-jp,anthy]
+/usr/bin/gconftool --direct \
+    --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults \
+    --type list --list-type=string \
+    --set /desktop/ibus/general/hotkey/trigger [Shift+space,Zenkaku_Hankaku,Alt+Kanji]
