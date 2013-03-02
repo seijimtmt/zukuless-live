@@ -3,10 +3,11 @@ zukuless-live
 
 custom configuration files for Debian Live system (wheezy)
 
-The system is customized for introductory programming with NQC/NXC
+zukuless-live is a set of custom configuration files for the debian
+live-build package.
+It is already customized for introductory programming with NQC/NXC
 (languages for the LEGO mindstorms RIS/NXT), but you can use it as a standard
 live system with the xfce4 destop environment. 
-Currently English and Japanese are supported.
 
 ## How to build
 
@@ -29,6 +30,7 @@ Then a live image "binary-YYMMDD.img" will be created.
 If necessary, edit "auto/config" before "lb config".
 You can set default language ("en" or "ja") and/or options for
 "lb config" (keyboard type, mirror sites, etc.).
+See also the Localization section below.
 
 ## Copy the image to a USB stick
 
@@ -42,18 +44,48 @@ If its device name is /dev/sdb, copy the image with dd:
 
 Be careful because this will overwrite the whole media.
 
+## Usage
+
+You can compile and download your NQC/NXC program to the
+RCX/Scout/Spybotics/NXT bricks via the IR tower or a USB cable,
+by right-clicking the file icon.
+
 ## Localization
 
-Save package-list files in config/package-lists/ 
-with a ".list.chroot.ZZ" suffix, where ZZ is one of the elements
-defined in ${LB_CUSTOM_LANGUAGES} in auto/config. 
-For example, if you have "config/package-lists/foo.list.chroot.ja", 
-it will be copied to "config/package-lists/foo_l10n-ja.list.chroot"
-automatically.
+Although only English and Japanese are currenty supported, it's easy
+to add other languages.
+Basically you only need to edit "auto/config" and to add package lists
+and hooks.
 
-Similarly, save local hooks in config/hooks/
-with a ".chroot.ZZ" suffix, e.g., "config/hooks/foo.chroot.ja".
-It will be copied to "config/hooks/foo_l10n-ja.chroot" automatically.
+### Edit auto/config
 
-"config/package-lists/*_l10n-*list.chroot" and "config/hooks/*_l10n-*.chroot"
+Set two variables, LB_CUSTOM_DEFAULT_LANGUAGE and LB_CUSTOM_LANGUAGES.
+The former is used for "lb config", while the latter
+for including package lists and local hooks for localization.
+You can put multiple values to LB_CUSTOM_LANGUAGES separated by space.
+e.g.,
+
+    LB_CUSTOM_DEFAULT_LANGUAGE="ja"
+    LB_CUSTOM_LANGUAGES="ja en"
+
+Add options to "lb config" for your default language, by using the "ja"
+case as reference.
+
+### Add package lists
+
+Put localizatoin lists in config/package-lists/ with ".list.chroot.ZZ" suffix,
+where ZZ is one of the elements you've defined in LB_CUSTOM_LANGUAGES
+(e.g., foo.list.chroot.ja).
+
+### Add hooks
+
+Put localization hooks in config/hooks/ with ".chroot.ZZ" suffix, 
+where ZZ is one of the elements you've defined in LB_CUSTOM_LANGUAGES
+(e.g., foo.chroot.ja).
+
+### Note
+
+The localization files "*_l10n-ZZ.list.chroot" (in config/package-lists/)
+and "*_l10n-ZZ.chroot" (in config/hooks/), which are created automatically
+by "lb config" (just copied from the files you add), 
 will be removed by "lb clean".
