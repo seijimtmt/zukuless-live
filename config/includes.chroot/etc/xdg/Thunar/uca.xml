@@ -24,7 +24,7 @@
 <actions>
 
   <action>
-    <icon>/usr/local/share/pixmaps/rcx.png</icon>
+    <icon>rcx</icon>
     <patterns>*.nqc</patterns>
     <name>download to the RCX</name>
     <name xml:lang="en">download to the RCX</name>
@@ -37,7 +37,7 @@
   </action>
 
   <action>
-    <icon>/usr/local/share/pixmaps/spc.png</icon>
+    <icon>spc</icon>
     <patterns>*.nqc</patterns>
     <name>download to the SPC</name>
     <name xml:lang="en">download to the SPC</name>
@@ -50,7 +50,7 @@
   </action>
 
   <action>
-    <icon>/usr/local/share/pixmaps/nxt.png</icon>
+    <icon>nxt</icon>
     <patterns>*.nxc</patterns>
     <name>download to the NXT</name>
     <name xml:lang="en">download to the NXT</name>
