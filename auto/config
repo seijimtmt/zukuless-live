@@ -48,20 +48,14 @@ esac
 #
 for _LANG in ${LB_CUSTOM_LANGUAGES}
 do
-    for _FILE in config/package-lists/*.list.chroot.${_LANG}
+    for _FILE in $(find config/package-lists/ -name "*.list.chroot.${_LANG}")
     do
-	if [ -e "${_FILE}" ]
-	then
-	    cp -i "${_FILE}" \
-		"${_FILE%.list.chroot.${_LANG}}_l10n-${_LANG}.list.chroot"
-	fi
+	cp -i "${_FILE}" \
+	    "${_FILE%.list.chroot.${_LANG}}_l10n-${_LANG}.list.chroot"
     done
 
-    for _FILE in config/hooks/*.chroot.${_LANG}
+    for _FILE in $(find config/hooks/ -name "*.chroot.${_LANG}")
     do
-	if [ -e "${_FILE}" ]
-	then
-	    cp -i "${_FILE}" "${_FILE%.chroot.${_LANG}}_l10n-${_LANG}.chroot"
-	fi
+	cp -i "${_FILE}" "${_FILE%.chroot.${_LANG}}_l10n-${_LANG}.chroot"
     done
 done
