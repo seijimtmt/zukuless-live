@@ -1,6 +1,7 @@
 task-japanese
 task-japanese-desktop
 ibus-mozc
+ibus-anthy
 anthy-el
 emacs-mozc
 iceweasel-l10n-ja
