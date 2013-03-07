@@ -58,4 +58,9 @@ do
     do
 	cp -i "${_FILE}" "${_FILE%.chroot.${_LANG}}_l10n-${_LANG}.chroot"
     done
+
+    for _FILE in $(find config/hooks/ -name "*.binary.${_LANG}")
+    do
+	cp -i "${_FILE}" "${_FILE%.binary.${_LANG}}_l10n-${_LANG}.binary"
+    done
 done

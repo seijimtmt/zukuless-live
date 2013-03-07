@@ -9,3 +9,4 @@ rm -f *.img *.iso *.contents *.packages *.md5sum *.log
 rm -f chroot.packages.*
 rm -f config/package-lists/*_l10n-*.list.chroot
 rm -f config/hooks/*_l10n-*.chroot
+rm -f config/hooks/*_l10n-*.binary
