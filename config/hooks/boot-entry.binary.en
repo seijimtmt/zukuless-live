@@ -1,0 +1,8 @@
+#!/bin/sh
+# add a boot menu entry for English (US)
+
+add_boot_entry "english-us" "Live English (US)" \
+"live-config.locales=en_US.UTF-8 \
+ live-config.timezone=America/New_York \
+ live-config.keyboard-model=us \
+ live-config.keyboard-layouts=us" default

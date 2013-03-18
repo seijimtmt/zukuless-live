@@ -1,52 +1,29 @@
 #!/bin/sh
 
-#  default language used by "lb config"
-LB_CUSTOM_DEFAULT_LANGUAGE="ja"
+#  languages or environments to setup
+ZL_LANGUAGES="en fr ja"
 
-#  languages for l10n setup
-LB_CUSTOM_LANGUAGES="ja en"
-
-case "${LB_CUSTOM_DEFAULT_LANGUAGE:-en}" in
-    ja*)
-        lb config noauto \
-            --apt-http-proxy "http://localhost:3142" \
-            --parent-mirror-bootstrap "http://ftp.jp.debian.org/debian/" \
-            --parent-mirror-binary "http://ftp.jp.debian.org/debian/" \
-            --mirror-bootstrap "http://ftp.jp.debian.org/debian/" \
-            --mirror-binary "http://ftp.jp.debian.org/debian/" \
-            --mirror-chroot "http://ftp.jp.debian.org/debian/" \
-            --parent-archive-areas "main contrib non-free" \
-            --archive-areas "main contrib non-free" \
-            --firmware-chroot true \
-            --distribution wheezy \
-            --linux-flavours amd64 \
-            --binary-images hdd \
-            --bootappend-live "boot=live config persistence noeject \
- live-config.locales=ja_JP.UTF-8 \
- live-config.utc=no \
- live-config.timezone=Asia/Tokyo \
- live-config.keyboard-model=jp106 \
- live-config.keyboard-layouts=jp" \
-            "${@}"
-        ;;
-    *)
-        lb config noauto \
-            --apt-http-proxy "http://localhost:3142" \
-            --parent-archive-areas "main contrib non-free" \
-            --archive-areas "main contrib non-free" \
-            --firmware-chroot true \
-            --distribution wheezy \
-            --linux-flavours amd64 \
-            --binary-images hdd \
-            --bootappend-live "boot=live config persistence noeject" \
-            "${@}"
-        ;;
-esac
+#  set mirrors etc.
+lb config noauto \
+    --apt-http-proxy "http://localhost:3142" \
+    --parent-mirror-bootstrap "http://ftp.jp.debian.org/debian/" \
+    --parent-mirror-binary "http://ftp.jp.debian.org/debian/" \
+    --mirror-bootstrap "http://ftp.jp.debian.org/debian/" \
+    --mirror-binary "http://ftp.jp.debian.org/debian/" \
+    --mirror-chroot "http://ftp.jp.debian.org/debian/" \
+    --parent-archive-areas "main contrib non-free" \
+    --archive-areas "main contrib non-free" \
+    --firmware-chroot true \
+    --distribution wheezy \
+    --linux-flavours amd64 \
+    --binary-images hdd \
+    --bootappend-live "boot=live config persistence quiet splash noeject live-config.utc=no" \
+    "${@}"
 
 #
-#  adding package lists and hooks for localization
+#  adding package lists and local hooks for localization
 #
-for _LANG in ${LB_CUSTOM_LANGUAGES}
+for _LANG in ${ZL_LANGUAGES}
 do
     for _FILE in $(find config/package-lists/ -name "*.list.chroot.${_LANG}")
     do

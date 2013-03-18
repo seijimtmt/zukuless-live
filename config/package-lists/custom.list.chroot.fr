@@ -1,0 +1,2 @@
+task-french
+task-french-desktop

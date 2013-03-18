@@ -1,0 +1,7 @@
+#!/bin/sh
+# add a boot menu entry for French
+
+add_boot_entry "french" "Live French" \
+"live-config.locales=fr_FR.UTF-8 \
+ live-config.timezone=Europe/Paris \
+ live-config.keyboard-layouts=fr,us"

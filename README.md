@@ -11,7 +11,7 @@ live system with the xfce4 destop environment.
 
 ## How to build
 
-Your host system to create live images must be a Debian wheezy machine.
+Your host system to create live images must be a (real or virtual) Debian wheezy machine.
 
 Install "live-build" and "apt-cacher" packages:
 
@@ -52,40 +52,58 @@ by right-clicking the file icon.
 
 ## Localization
 
-Although only English and Japanese are currenty supported, it's easy
-to add other languages.
-Basically you only need to edit "auto/config" and to add package lists
-and hooks.
+Localization (L10N) is quit easy.
+You only need to
+* edit "auto/config"
+* create a local hook that adds your language to boot menu
+* add a package list that includes your language task
 
 ### Edit auto/config
 
-Set two variables, LB_CUSTOM_DEFAULT_LANGUAGE and LB_CUSTOM_LANGUAGES.
-The former is used for "lb config", while the latter
-for including package lists and local hooks for localization.
-You can put multiple values to LB_CUSTOM_LANGUAGES separated by space.
-e.g.,
+Set mirrors, flavour, etc. in "auto/config".
+Also set ZL_LANGUAGES which is used to include package lists and local hooks
+for localization. You can put multiple entries into ZL_LANGUAGES separated
+by space, e.g.,
 
-    LB_CUSTOM_DEFAULT_LANGUAGE="ja"
-    LB_CUSTOM_LANGUAGES="ja en"
+    ZL_LANGUAGES="en fr ja"
 
-Add options to "lb config" for your default language, by using the "ja"
-case as reference.
+or 
+
+    ZL_LANGUAGES="en ja-home ja-class"
+
+### Add boot menu entry
+
+Create a hook with ".binary.ZZ" suffix to add your language to the boot menu, 
+where ZZ is one of the elements you've defined in ZL_LANGUAGES. 
+For example, "config/hooks/boot-entry.binary.ja" looks like
+
+    #!/bin/sh
+    add_boot_entry "japanese" "Live Japanese" \
+    "live-config.locales=ja_JP.UTF-8 \
+     live-config.timezone=Asia/Tokyo \
+     live-config.keyboard-model=jp106 \
+     live-config.keyboard-layouts=jp,us"
+
+Here "add_boot_entry" is a local script in local/bin/ that adds a boot
+menu entry.
 
 ### Add package lists
 
-Put localizatoin lists in config/package-lists/ with ".list.chroot.ZZ" suffix,
-where ZZ is one of the elements you've defined in LB_CUSTOM_LANGUAGES
-(e.g., foo.list.chroot.ja).
+Put localization list(s) in config/package-lists/ with ".list.chroot.ZZ" suffix.
+It is convenient to include task-LANGUAGE and task-LANGUAGE-desktop packages,
+which is usually sufficient to prepare your language environment.
+For example, 
+
+    echo "task-japanese task-japanese-desktop" > config/package-lists/custom.list.chroot.ja
 
 ### Add hooks
 
-Put localization hooks in config/hooks/ with ".chroot.ZZ" suffix, 
-where ZZ is one of the elements you've defined in LB_CUSTOM_LANGUAGES
-(e.g., foo.chroot.ja).
+Put other localization hooks in config/hooks/ with ".chroot.ZZ"
+or ".binary.ZZ" suffix, if necessary. 
 
 ### Note
 
-The localization files "*_l10n-ZZ.list.chroot" (in config/package-lists/)
-and "*_l10n-ZZ.chroot" (in config/hooks/), which are created automatically
-by "lb config" (just copied from the files you add), 
-will be removed by "lb clean".
+The localization files "*_l10n-ZZ.list.chroot" (in config/package-lists/),
+"*_l10n-ZZ.chroot" and "*_l0n-ZZ.binary" (in config/hooks/), 
+which are created automatically by "lb config" (just copied from the files
+you add), will be removed by "lb clean". 

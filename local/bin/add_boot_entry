@@ -1,0 +1,105 @@
+#!/bin/sh
+##
+## local/bin/add_boot_entry - a binary-stage local script for live-build 3.0.1
+##
+## adds custom live boot entries (e.g. l10n) to binary/BOOTLOADER/live.cfg
+## just above the failsafe entries that are also used as templates. 
+## The same kernel and initrd images are used as in failsafe entries,
+## and additional kernel parameters (APPEND) will be added after
+## LB_BOOTAPPEND_LIVE given by "lb config --bootappend-live" command.
+## Use this script with local hooks (config/hooks/*.binary).
+##
+## Usage:
+##   add_boot_entry LABEL MENULABEL APPEND [default]
+##     The 4th parameter is optional.  If the value "default" is specified, 
+##     the entry is set as default, and existing "menu default" line(s) will
+##     be deleted. 
+##
+## Example:
+##   add_boot_entry "japanese" "Live japanese" \
+##     "boot=live config live-config.utc=no live-config.locales=ja_JP.UTF-8"
+##
+##
+## Copyright (C) 2013 Seiji Matsumoto <matsu@johnen.shinshu-u.ac.jp>
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+##
+## Last-update: 2013-03-18
+
+# read config to set LB_BOOTAPPEND_LIVE
+[ ! -e config/binary ] && echo "${0}: config/binary not found !" && exit 1
+. config/binary
+
+# read parameters
+_LABEL="$(echo -n ${1} | tr -cs '[A-Z][a-z]\-' '_')"
+_MENULABEL="$(echo -n ${2})"
+_APPEND="$(echo -n ${LB_BOOTAPPEND_LIVE} ${3})"
+[ "${4}" = "default" ] && _DEFAULT="true" || _DEFAULT="false"
+
+for _BOOTLOADER in extlinux isolinux pxelinux syslinux
+do
+	_LIVECFG="binary/${_BOOTLOADER}/live.cfg"
+	[ ! -e "${_LIVECFG}" ] && continue
+
+	echo -n "${0}: adding entry ${_LABEL} to ${_LIVECFG} ... "
+
+	# tidying up live.cfg.in
+	sed -i -e 's|\t\+\ *|\t|g' -e 's|\ \+\t*|\ |g' "${_LIVECFG}"
+	sed -i -e 's|^[\t\ ]\(label\)[\ \t]\([^\t\ ]*\)[\t\ ]*$|\1\ \2|g' "${_LIVECFG}"
+
+	[ -n "$(sed -n -e '/^label\ [^\t\ ]*[\t\ ]/p' ${_LIVECFG})" ] && \
+	    echo "${0}: E: invalid entry label with white space !" && exit 1
+
+	# search failsafe entries
+	_TMPLATES="$(sed -n -e 's|^label\ \+\(.*-failsafe\)$|\1| p' ${_LIVECFG})"
+
+	[ ! -n "${_TMPLATES}" ] && \
+	    echo "${0}: E: failsafe entry not found !" && exit 1
+
+	for _TMPLATE in ${_TMPLATES}
+	do
+		# default or not (the 1st flavour only)
+		if [ "${_DEFAULT}" = "true" ]
+		then
+			sed -i -e '/^[\t ]*menu default/d' "${_LIVECFG}"
+			_MENUD='\n\tmenu default'
+		else
+			_MENUD=
+		fi
+
+		# define _ENTRY using failsafe entry as template
+		_ENTRY=$(grep -A 4 "^label ${_TMPLATE}$" "${_LIVECFG}" | \
+		    sed \
+		    -e "s|^\(label.*\)failsafe$|\1${_LABEL}|" \
+		    -e "s|^[\t\ ]*\(menu label\)[^\(]*\(.*\)\ failsafe\(.*\)$|\t\1 ^${_MENULABEL}\ \2\3${_MENUD}|" \
+		    -e "s|^[\t\ ]*\(append\).*$|\t\1\ ${_APPEND}\n|" | \
+		    sed -e 's|$|\\|')
+
+		# insert _ENTRY just above the failsafe entry
+		sed -i -e "/^label\ ${_TMPLATE}/i ${_ENTRY}" "${_LIVECFG}"
+
+		# unset default
+		_DEFAULT="false"
+
+	done && sed -i -e 's|\\$||g' "${_LIVECFG}" && echo "done"
+
+	# make menu labels slightly simple for single-flavour systems
+	if [ "$(grep '^label.*failsafe' ${_LIVECFG} | wc -l)" = "1" ]
+	then
+		_FLAVOUR="$(sed -n -e 's|^label\ live-\(.*\)-failsafe|\1| p' ${_LIVECFG})"
+		sed -i -e "s|(${_FLAVOUR})||g" "${_LIVECFG}"
+	fi
+done
+
+exit 0

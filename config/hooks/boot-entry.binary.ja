@@ -1,0 +1,8 @@
+#!/bin/sh
+# add a boot menu entry for Japanese 
+
+add_boot_entry "japanese" "Live Japanese" \
+"live-config.locales=ja_JP.UTF-8 \
+ live-config.timezone=Asia/Tokyo \
+ live-config.keyboard-model=jp106 \
+ live-config.keyboard-layouts=jp,us"
