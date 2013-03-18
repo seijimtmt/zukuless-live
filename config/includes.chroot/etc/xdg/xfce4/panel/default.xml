@@ -5,6 +5,7 @@
     <property name="panel-0" type="empty">
       <property name="position" type="string" value="p=6;x=0;y=0"/>
       <property name="length" type="uint" value="100"/>
+      <property name="size" type="uint" value="24"/>
       <property name="position-locked" type="bool" value="true"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="1"/>
@@ -13,11 +14,11 @@
         <value type="int" value="9"/>
         <value type="int" value="10"/>
         <value type="int" value="11"/>
-        <value type="int" value="12"/>
         <value type="int" value="3"/>
         <value type="int" value="4"/>
         <value type="int" value="5"/>
         <value type="int" value="6"/>
+        <value type="int" value="12"/>
       </property>
     </property>
   </property>
@@ -44,10 +45,6 @@
         <value type="string" value="exo-web-browser.desktop"/>
       </property>
     </property>
-    <property name="plugin-12" type="string" value="launcher">
-      <property name="items" type="array">
-        <value type="string" value="xfce4-appfinder.desktop"/>
-      </property>
-    </property>
+    <property name="plugin-12" type="string" value="xkb-plugin"/>
   </property>
 </channel>
