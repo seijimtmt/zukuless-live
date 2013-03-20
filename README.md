@@ -28,9 +28,8 @@ Download the scripts and build:
 Then a live image "binary-YYMMDD.img" will be created.
 
 If necessary, edit "auto/config" before "lb config".
-You can set default language ("en" or "ja") and/or options for
-"lb config" (keyboard type, mirror sites, etc.).
-See also the Localization section below.
+You can set default options for "lb config" (mirror sites, etc.).
+For l10n and m17n, see below.
 
 ## Copy the image to a USB stick
 
@@ -52,7 +51,7 @@ by right-clicking the file icon.
 
 ## Localization
 
-Localization (L10N) is quit easy.
+Localization (L10N) is quite easy.
 You only need to
 * edit "auto/config"
 * create a local hook that adds your language to boot menu
@@ -85,7 +84,11 @@ For example, "config/hooks/boot-entry.binary.ja" looks like
      live-config.keyboard-layouts=jp,us"
 
 Here "add_boot_entry" is a local script in local/bin/ that adds a boot
-menu entry.
+menu entry. It requires three parameters:
+
+    add_boot_entry LABEL MENULABEL APPEND [default]
+
+If the 4th optional parameter "default" is given, the entry will be set as default.
 
 ### Add package lists
 
