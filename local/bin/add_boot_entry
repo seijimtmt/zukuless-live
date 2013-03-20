@@ -11,9 +11,12 @@
 ##
 ## Usage:
 ##   add_boot_entry LABEL MENULABEL APPEND [default]
+##     or
+##   add_boot_entry clear
 ##     The 4th parameter is optional.  If the value "default" is specified, 
 ##     the entry is set as default, and existing "menu default" line(s) will
-##     be deleted. 
+##     be deleted. If only one option "clear" is specified, the other boot
+##     entries except the failsafe ones will be removed.
 ##
 ## Example:
 ##   add_boot_entry "japanese" "Live japanese" \
@@ -35,7 +38,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## Last-update: 2013-03-18
+## Last-update: 2013-03-19
 
 # read config to set LB_BOOTAPPEND_LIVE
 [ ! -e config/binary ] && echo "${0}: config/binary not found !" && exit 1
@@ -51,6 +54,17 @@ for _BOOTLOADER in extlinux isolinux pxelinux syslinux
 do
 	_LIVECFG="binary/${_BOOTLOADER}/live.cfg"
 	[ ! -e "${_LIVECFG}" ] && continue
+
+	# if the 1st parameter is "clear", boot entries except the failsafe
+	# ones will be removed
+	if [ "${_LABEL}" = "clear" ] && [ "${#}" = "1" ]
+	then
+		echo "${0}: clearing entries in ${_LIVECFG} ... "
+		mv "${_LIVECFG}" "${_LIVECFG}.backup"
+		grep -A 4 '^label.*-failsafe$' "${_LIVECFG}.backup" | \
+		    sed -e 's|^--||' > "${_LIVECFG}"
+		continue
+	fi
 
 	echo -n "${0}: adding entry ${_LABEL} to ${_LIVECFG} ... "
 

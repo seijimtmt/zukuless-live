@@ -104,6 +104,16 @@ For example,
 Put other localization hooks in config/hooks/ with ".chroot.ZZ"
 or ".binary.ZZ" suffix, if necessary. 
 
+### Quick multilingualization (M17N)
+
+Another quick way to enable M17N is to set ZL_LANGUAGES="m17n" in auto/config:
+
+    ZL_LANGUAGES="m17n"
+
+Then add your language entries to "config/hooks/livecfg-m17n.binary.m17n"
+and "config/package-lists/custom.list.chroot.m17n", if they are missing.
+That's all.
+
 ### Note
 
 The localization files "*_l10n-ZZ.list.chroot" (in config/package-lists/),

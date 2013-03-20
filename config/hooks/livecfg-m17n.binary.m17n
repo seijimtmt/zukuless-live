@@ -1,0 +1,80 @@
+#!/bin/sh
+##
+##  livecfg-m17n.binary.m17n - a binary-stage local hook for Live Build Scripts
+##  
+##  adds boot menu entries to binary/BOOTLOADER/live.cfg
+##  using "local/bin/add_boot_entry" script.
+##  Add entries for your languages if they are missing.
+##  "add_boot_entry LABEL MENULABEL APPEND [default]"
+
+[ ! -e  local/bin/add_boot_entry ] && \
+    echo "${0}: add_boot_entry not found, skipping..." && exit 0
+
+#  using info files to check if task-LANGUAGE's are installed
+INFODIR="chroot/var/lib/dpkg/info"
+
+# clear boot menu entries except failsafe ones
+add_boot_entry clear
+
+# Chinese (Simplified)
+[ -e "${INFODIR}/task-chinese-s.list" ] && \
+add_boot_entry "chinese-s" "Live Chinese (Simplified)" \
+"live-config.locales=zh_CN.UTF-8 \
+ live-config.timezone=Asia/Shanghai \
+ live-config.keyboard-model=us \
+ live-config.keyboard-layouts=us"
+
+# Chinese (Traditional)
+[ -e "${INFODIR}/task-chinese-t.list" ] && \
+add_boot_entry "chinese-t" "Live Chinese (Traditional)" \
+"live-config.locales=zh_TW.UTF-8 \
+ live-config.timezone=Asia/Taipei \
+ live-config.keyboard-model=us \
+ live-config.keyboard-layouts=us"
+
+# English (US)
+add_boot_entry "english-us" "Live English (US)" \
+"live-config.locales=en_US.UTF-8 \
+ live-config.timezone=America/New_York \
+ live-config.keyboard-model=us \
+ live-config.keyboard-layouts=us" default
+
+# French
+[ -e "${INFODIR}/task-french.list" ] && \
+add_boot_entry "french" "Live French" \
+"live-config.locales=fr_FR.UTF-8 \
+ live-config.timezone=Europe/Paris \
+ live-config.keyboard-layouts=fr,us"
+
+# German
+[ -e "${INFODIR}/task-german.list" ] && \
+add_boot_entry "german" "Live German" \
+"live-config.locales=de_DE.UTF-8 \
+ live-config.timezone=Europe/Berlin \
+ live-config.keyboard-layouts=de,us"
+
+# Japanese
+[ -e "${INFODIR}/task-japanese.list" ] && \
+add_boot_entry "japanese" "Live Japanese" \
+"live-config.locales=ja_JP.UTF-8 \
+ live-config.timezone=Asia/Tokyo \
+ live-config.keyboard-model=jp106 \
+ live-config.keyboard-layouts=jp,us"
+
+# Khmer
+[ -e "${INFODIR}/task-khmer.list" ] && \
+add_boot_entry "khmer" "Live Khmer" \
+"live-config.locales=km_KH.UTF-8 \
+ live-config.timezone=Asia/Phnom_Penh \
+ live-config.keyboard-model=us \
+ live-config.keyboard-layouts=us"
+
+# Korean
+[ -e "${INFODIR}/task-korean.list" ] && \
+add_boot_entry "korean" "Live Korean" \
+"live-config.locales=ko_KR.UTF-8 \
+ live-config.timezone=Asia/Seoul \
+ live-config.keyboard-model=kr106 \
+ live-config.keyboard-layouts=kr,us"
+
+exit 0
