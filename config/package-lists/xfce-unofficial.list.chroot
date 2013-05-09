@@ -16,6 +16,7 @@ thunar-volman
 thunar-archive-plugin
 thunar-media-tags-plugin
 tumbler
+lightdm
 
 #
 #  Programing (NQC, C++, Ruby, Python, pascal, make, etc.)
