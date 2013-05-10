@@ -29,7 +29,7 @@
     <name>download to the RCX</name>
     <name xml:lang="en">download to the RCX</name>
     <name xml:lang="ja">RCXに転送</name>
-    <command>xterm -hold -e nqc -d %f</command>
+    <command>xterm -hold -e nqc -Trcx2 -Susb -d %f</command>
     <description>compile and download to the RCX</description>
     <description xml:lang="en">compile and download to the RCX</description>
     <description xml:lang="ja">選択したファイルをNQCでコンパイルしてRCXに転送します。</description>

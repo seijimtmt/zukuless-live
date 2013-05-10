@@ -24,7 +24,7 @@ rm -f /etc/xdg/autostart/xfce4-tips-autostart.desktop
 #  setting NQC default
 #
 echo "live-config hook: custom ... setting NQC defaults ..."
-cat >> /etc/profile <<EOF
+cat >> /etc/bash.bashrc <<EOF
 
 export RCX_PORT=usb
 export NQC_OPTIONS="-Trcx2"
