@@ -21,7 +21,7 @@ Install "live-build" and "apt-cacher" packages:
 
 Download the scripts and build:
 
-    $ git clone https://github.com/seijimtmt/zukuless-live.git
+    $ git clone https://github.com/seijimtmt/zukuless-live
     $ cd zukuless-live/
     $ lb config && sudo lb build
 
