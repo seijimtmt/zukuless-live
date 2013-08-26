@@ -55,7 +55,7 @@
     <name>download to the NXT</name>
     <name xml:lang="en">download to the NXT</name>
     <name xml:lang="ja">NXTに転送</name>
-    <command>xterm -hold -e nbc -d %f</command>
+    <command>xterm -hold -e nbc -v=132 -EF -d %f</command>
     <description>compile and download to the NXT</description>
     <description xml:lang="en">compile and download to the NXT</description>
     <description xml:lang="ja">選択したファイルをNBCでコンパイルしてNXTに転送します。</description>
