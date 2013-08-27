@@ -45,10 +45,5 @@ initial-interval 2;
 EOF
 
 
-#
-#  do not load cdc_acm driver
-#
-echo "live-config hook: custom ... removing cdc_acm ..."
-echo "blacklist cdc_acm" > /etc/modprobe.d/legonxt.conf
-
 exit 0
+
