@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SRC="http://downloads.sourceforge.net/bricxcc/nbc-1.2.1.r3.src.tgz"
+SRC="http://downloads.sourceforge.net/bricxcc/nbc-1.2.1.r4.src.tgz"
 
 
 echo
@@ -9,15 +9,13 @@ echo "live-config hook: installing nbc ..."
 cd /usr/local/src
 if wget "${SRC}"
 then
-    mkdir nbc-1.2.1.r3
-    cd nbc-1.2.1.r3
-    tar zvxf ../nbc-1.2.1.r3.src.tgz
-    make
-    mv NXT/nbc /usr/local/bin/
-    mkdir -p /usr/local/share/man/man1
-    gzip -c doc/nbc.1 > /usr/local/share/man/man1/nbc.1.gz
-    cd ../
-    rm -fr nbc-1.2.1.r3
+    mkdir nbc-1.2.1.r4
+    cd nbc-1.2.1.r4
+    tar zvxf ../nbc-1.2.1.r4.src.tgz
+    cd NXT
+    make -f nbcunix.mak && mv nbc /usr/local/bin/
+    cd ../../
+    rm -fr nbc-1.2.1.r4
 else
-    echo "live-config hook: failed to download nbc-1.2.1.r3.src.tgz."
+    echo "live-config hook: failed to download nbc-1.2.1.r4.src.tgz."
 fi
