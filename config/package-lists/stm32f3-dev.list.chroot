@@ -1,0 +1,20 @@
+# https://github.com/esden/summon-arm-toolchain
+# http://gum.debian.or.jp/2013/sites/all/files/slides/20130629_deb_cortexm3_0.pdf
+
+flex
+bison
+libgmp3-dev
+flex
+bison
+libgmp3-dev
+libmpfr-dev
+libncurses5-dev
+libmpc-dev
+autoconf
+texinfo
+build-essential
+libftdi-dev
+zlib1g-dev
+python-yaml
+libsgutils2-dev
+libusb-1.0-0-dev
