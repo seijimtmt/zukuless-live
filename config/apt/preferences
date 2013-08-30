@@ -1,3 +1,8 @@
 Package: texlive-*-doc
 Pin: release n=wheezy
 Pin-Priority: -1
+
+Package: *
+Pin: release n=wheezy-backports
+Pin-Priority: 600
+

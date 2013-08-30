@@ -17,6 +17,7 @@ lb config noauto \
     --distribution wheezy \
     --linux-flavours amd64 \
     --binary-images hdd \
+    --backports true \
     --bootappend-live "boot=live config persistence quiet splash noeject live-config.utc=no" \
     "${@}"
 
