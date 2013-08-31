@@ -1,12 +1,12 @@
 #!/bin/sh
 
 echo
-echo "live-config hook: customizing the system ..."
+echo "hook: customizing the system ..."
 
 #
 #  setting default browser
 #
-echo "live-config hook: custom ... setting default browser ..."
+echo "hook: custom ... setting default browser ..."
 if [ -e /usr/bin/iceweasel ]
 then
     update-alternatives --set x-www-browser /usr/bin/iceweasel
@@ -16,14 +16,14 @@ fi
 #
 #  do not start xfce4-tips automatically
 #
-echo "live-config hook: custom ... setting xfce-tips not to start automatically ..."
+echo "hook: custom ... setting xfce-tips not to start automatically ..."
 rm -f /etc/xdg/autostart/xfce4-tips-autostart.desktop
 
 
 #
 #  setting NQC default
 #
-echo "live-config hook: custom ... setting NQC defaults ..."
+echo "hook: custom ... setting NQC defaults ..."
 cat >> /etc/bash.bashrc <<EOF
 
 export RCX_PORT=usb
@@ -34,7 +34,7 @@ EOF
 #
 #  changing defaults values of /etc/dhcp/dhclient.conf
 #
-echo "live-config hook: custom ... setting DHCP client ..."
+echo "hook: custom ... setting DHCP client ..."
 cat >> /etc/dhcp/dhclient.conf <<EOF
 
 timeout 5;
@@ -44,6 +44,35 @@ select-timeout 5;
 initial-interval 2;
 EOF
 
+#
+#  Adding Da Vinci 32U (StrawberryLinux) to the hardware list
+#
+if [ -e /usr/share/arduino/hardware/arduino/boards.txt ]
+then
+    echo "hook: custom ... setting arduino IDE ..."
+    cat >> /usr/share/arduino/hardware/arduino/boards.txt <<EOF
+
+##############################################################
+
+davinci.name=Da Vinci 32U
+davinci.upload.protocol=avr109
+davinci.upload.maximum_size=28672
+davinci.upload.speed=57600
+davinci.upload.disable_flushing=true
+davinci.bootloader.low_fuses=0xff
+davinci.bootloader.high_fuses=0xd8
+davinci.bootloader.extended_fuses=0xcb
+davinci.bootloader.path=caterina
+davinci.bootloader.file=davinci.hex
+davinci.bootloader.unlock_bits=0x3F
+davinci.bootloader.lock_bits=0x2F
+davinci.build.mcu=atmega32u4
+davinci.build.f_cpu=16000000L
+davinci.build.vid=0x1774
+davinci.build.pid=0x8032
+davinci.build.core=arduino
+davinci.build.variant=leonardo
+EOF
+fi
 
 exit 0
-
